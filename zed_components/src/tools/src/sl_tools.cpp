@@ -307,6 +307,102 @@ std::unique_ptr<sensor_msgs::msg::Image> imagesToROSmsg(
   return imgMsgPtr;
 }
 
+nvidia::isaac_ros::nitros::NitrosImage imageToNitrosImage(
+  const sl::Mat & img, 
+  const std::string & frameId, 
+  const rclcpp::Time & t)
+{
+  std_msgs::msg::Header header;
+  header.stamp = t;
+  header.frame_id = frameId;
+
+  nvidia::isaac_ros::nitros::NitrosImage imgMessage;
+  void * gpuBuffer = nullptr;
+
+  sl::MAT_TYPE dataType = img.getDataType();
+
+  switch (dataType) {
+    case sl::MAT_TYPE::F32_C1: /**< float 1 channel.*/
+      gpuBuffer = reinterpret_cast<void *>(img.getPtr<sl::float1>());
+      imgMessage = nvidia::isaac_ros::nitros::NitrosImageBuilder()
+        .WithHeader(header)
+        .WithEncoding(sensor_msgs::image_encodings::TYPE_32FC1)
+        .WithDimensions(img.getWidth(), img.getHeight())
+        .WithGpuData(gpuBuffer)
+        .Build();
+      break;
+
+    case sl::MAT_TYPE::F32_C3: /**< float 3 channels.*/
+      gpuBuffer = reinterpret_cast<void *>(img.getPtr<sl::float3>());
+      imgMessage = nvidia::isaac_ros::nitros::NitrosImageBuilder()
+        .WithHeader(header)
+        .WithEncoding(sensor_msgs::image_encodings::TYPE_32FC3)
+        .WithDimensions(img.getWidth(), img.getHeight())
+        .WithGpuData(gpuBuffer)
+        .Build();
+      break;
+
+    case sl::MAT_TYPE::F32_C4: /**< float 4 channels.*/
+      gpuBuffer = reinterpret_cast<void *>(img.getPtr<sl::float4>());
+      imgMessage = nvidia::isaac_ros::nitros::NitrosImageBuilder()
+        .WithHeader(header)
+        .WithEncoding(sensor_msgs::image_encodings::TYPE_32FC4)
+        .WithDimensions(img.getWidth(), img.getHeight())
+        .WithGpuData(gpuBuffer)
+        .Build();
+      break;
+
+    case sl::MAT_TYPE::U8_C1: /**< unsigned char 1 channel.*/
+      gpuBuffer = reinterpret_cast<void *>(img.getPtr<sl::uchar1>());
+      imgMessage = nvidia::isaac_ros::nitros::NitrosImageBuilder()
+        .WithHeader(header)
+        .WithEncoding(sensor_msgs::image_encodings::MONO8)
+        .WithDimensions(img.getWidth(), img.getHeight())
+        .WithGpuData(gpuBuffer)
+        .Build();
+      break;
+
+    case sl::MAT_TYPE::U8_C3: /**< unsigned char 3 channels.*/
+      gpuBuffer = reinterpret_cast<void *>(img.getPtr<sl::uchar3>());
+      imgMessage = nvidia::isaac_ros::nitros::NitrosImageBuilder()
+        .WithHeader(header)
+        .WithEncoding(sensor_msgs::image_encodings::BGR8)
+        .WithDimensions(img.getWidth(), img.getHeight())
+        .WithGpuData(gpuBuffer)
+        .Build();
+      break;
+
+    case sl::MAT_TYPE::U8_C4: /**< unsigned char 4 channels.*/
+      gpuBuffer = reinterpret_cast<void *>(img.getPtr<sl::uchar4>());
+      imgMessage = nvidia::isaac_ros::nitros::NitrosImageBuilder()
+        .WithHeader(header)
+        .WithEncoding(sensor_msgs::image_encodings::BGRA8)
+        .WithDimensions(img.getWidth(), img.getHeight())
+        .WithGpuData(gpuBuffer)
+        .Build();
+      break;
+  }
+
+  return imgMessage;
+}
+
+nvidia::isaac_ros::nitros::NitrosCameraInfo cameraInfoToNitrosCameraInfo(
+  const std::shared_ptr<sensor_msgs::msg::CameraInfo> & camInfo, 
+  const std::string & frameId, 
+  const rclcpp::Time & t)
+{
+  std_msgs::msg::Header header;
+  header.stamp = t;
+  header.frame_id = frameId;
+  nvidia::isaac_ros::nitros::NitrosCameraInfo cameraNitrosInfo_;
+    rclcpp::TypeAdapter<
+      nvidia::isaac_ros::nitros::NitrosCameraInfo, 
+      sensor_msgs::msg::CameraInfo
+    >::convert_to_custom(*camInfo, cameraNitrosInfo_);
+
+  return cameraNitrosInfo_;
+}
+
 std::string qos2str(rmw_qos_history_policy_t qos)
 {
   if (qos == RMW_QOS_POLICY_HISTORY_KEEP_LAST) {

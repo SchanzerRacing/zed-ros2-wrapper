@@ -27,6 +27,10 @@
 namespace stereolabs
 {
 
+namespace {
+    constexpr const char kDefaultQoS[] = "DEFAULT";
+}
+
 class ZedCamera : public rclcpp::Node
 {
 public:
@@ -163,6 +167,12 @@ protected:
   void publishImageWithInfo(
     sl::Mat & img,
     image_transport::CameraPublisher & pubImg,
+    camInfoMsgPtr & camInfoMsg, std::string imgFrameId,
+    rclcpp::Time t);
+  void publishNitrosImageWithInfo(
+    sl::Mat & img,
+    std::shared_ptr<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosImage>> & pubImg,
+    std::shared_ptr<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosCameraInfo>> & pubNitrosCamInfo,
     camInfoMsgPtr & camInfoMsg, std::string imgFrameId,
     rclcpp::Time t);
   void publishDepthMapWithInfo(sl::Mat & depth, rclcpp::Time t);
@@ -586,6 +596,14 @@ private:
   image_transport::CameraPublisher mPubRawRightGray;
 
   image_transport::CameraPublisher mPubRoiMask;
+
+  // ---- Nitros Image Publishers
+  std::shared_ptr<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosImage>> mNitrosPubRightRgb;
+  std::shared_ptr<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosImage>> mNitrosPubLeftRgb;
+  std::shared_ptr<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosCameraInfo>> mNitrosPubRightRgbInfo;
+  std::shared_ptr<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosCameraInfo>> mNitrosPubLeftRgbInfo;
+  const rclcpp::QoS output_qos_nitros = ::isaac_ros::common::AddQosParameter(
+    *this, kDefaultQoS, "output_qos").keep_last(10);
 
 #ifndef FOUND_FOXY
   point_cloud_transport::Publisher mPubCloud;

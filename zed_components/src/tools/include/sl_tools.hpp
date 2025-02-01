@@ -22,6 +22,12 @@
 #include <sl/Camera.hpp>
 #include <string>
 #include <vector>
+#include <isaac_ros_nitros_image_type/nitros_image.hpp>
+#include <isaac_ros_nitros_image_type/nitros_image_builder.hpp>
+#include <isaac_ros_nitros_camera_info_type/nitros_camera_info.hpp>
+#include <std_msgs/msg/header.hpp>
+#include <sensor_msgs/image_encodings.hpp>
+#include <sensor_msgs/msg/camera_info.hpp>
 
 #include "gnss_replay.hpp"
 #include "sl_win_avg.hpp"
@@ -90,6 +96,12 @@ std::unique_ptr<sensor_msgs::msg::Image> imageToROSmsg(
 std::unique_ptr<sensor_msgs::msg::Image> imagesToROSmsg(
   const sl::Mat & left, const sl::Mat & right, const std::string & frameId,
   const rclcpp::Time & t);
+
+nvidia::isaac_ros::nitros::NitrosImage imageToNitrosImage(
+  const sl::Mat & img, const std::string & frameId, const rclcpp::Time & t);
+
+nvidia::isaac_ros::nitros::NitrosCameraInfo cameraInfoToNitrosCameraInfo(
+  const std::shared_ptr<sensor_msgs::msg::CameraInfo> & camInfo, const std::string & frameId, const rclcpp::Time & t);
 
 /*! \brief qos value to string
  * \param qos the value to convert

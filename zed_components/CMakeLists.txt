@@ -109,6 +109,10 @@ set(DEPENDENCIES
     visualization_msgs
     shape_msgs
     robot_localization
+    isaac_ros_nitros
+    isaac_ros_managed_nitros
+    isaac_ros_nitros_image_type
+    isaac_ros_common
 )
 
 find_package(ament_cmake_auto REQUIRED)
@@ -137,6 +141,10 @@ find_package(diagnostic_updater REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(shape_msgs REQUIRED)
 find_package(robot_localization REQUIRED)
+find_package(isaac_ros_nitros REQUIRED)
+find_package(isaac_ros_managed_nitros REQUIRED)
+find_package(isaac_ros_nitros_image_type REQUIRED)
+find_package(isaac_ros_common REQUIRED)
 
 if(NOT ${FOUND_ROS2_DISTRO} STREQUAL "foxy")
   find_package(point_cloud_transport REQUIRED)
