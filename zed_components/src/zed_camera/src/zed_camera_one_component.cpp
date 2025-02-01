@@ -2601,7 +2601,7 @@ void ZedCameraOne::retrieveImages()
   if (_colorSubCount > 0) {
     retrieved |=
       (sl::ERROR_CODE::SUCCESS ==
-      _zed->retrieveImage(_matColor, sl::VIEW::LEFT, sl::MEM::CPU, _matResol));
+      _zed->retrieveImage(_matColor, sl::VIEW::LEFT, sl::MEM::GPU, _matResol));
     _sdkGrabTS = _matColor.timestamp;
     DEBUG_STREAM_VD(
       "Color image " << _matResol.width << "x" << _matResol.height << " retrieved - timestamp: " << _sdkGrabTS.getNanoseconds() <<
