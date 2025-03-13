@@ -62,6 +62,10 @@
     <exec_depend>draco_point_cloud_transport</exec_depend>
     <exec_depend>zlib_point_cloud_transport</exec_depend>
     <exec_depend>zstd_point_cloud_transport</exec_depend>
+    <exec_depend>isaac_ros_nitros</exec_depend>
+    <exec_depend>isaac_ros_managed_nitros</exec_depend>
+    <exec_depend>isaac_ros_nitros_image_type</exec_depend>
+    <exec_depend>isaac_ros_nitros_camera_info_type</exec_depend>
     <test_depend>ament_lint_auto</test_depend>
     <test_depend>ament_cmake_copyright</test_depend>
     <test_depend>ament_cmake_cppcheck</test_depend>

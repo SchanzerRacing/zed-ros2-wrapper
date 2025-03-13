@@ -61,6 +61,7 @@
 #include <zed_msgs/srv/start_svo_rec.hpp>
 #include <isaac_ros_managed_nitros/managed_nitros_publisher.hpp>
 #include <isaac_ros_nitros_image_type/nitros_image.hpp>
+#include <isaac_ros_nitros_image_type/nitros_image_builder.hpp>
 #include <isaac_ros_nitros_camera_info_type/nitros_camera_info.hpp>
 #include <isaac_ros_common/qos.hpp>
 

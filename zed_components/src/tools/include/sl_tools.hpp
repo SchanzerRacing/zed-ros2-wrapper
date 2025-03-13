@@ -25,6 +25,7 @@
 #include <isaac_ros_nitros_image_type/nitros_image.hpp>
 #include <isaac_ros_nitros_image_type/nitros_image_builder.hpp>
 #include <isaac_ros_nitros_camera_info_type/nitros_camera_info.hpp>
+#include <cuda_runtime.h>
 #include <std_msgs/msg/header.hpp>
 #include <sensor_msgs/image_encodings.hpp>
 #include <sensor_msgs/msg/camera_info.hpp>

@@ -3517,52 +3517,52 @@ void ZedCamera::initPublishers()
     get_logger(), "Advertised on topic: " << mPubRawRightGray.getInfoTopic());
 
   // Nitros Image topics
-  mNitrosPubLeftRgb = std::make_shared<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosImage>>(
-    this,
-    nitros_rbg_left_topic,
-    nvidia::isaac_ros::nitros::nitros_image_bgra8_t::supported_type_name,
-    nvidia::isaac_ros::nitros::NitrosDiagnosticsConfig(),
-    output_qos_nitros
-  );
+  // mNitrosPubLeftRgb = std::make_shared<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosImage>>(
+  //   this,
+  //   nitros_rbg_left_topic,
+  //   nvidia::isaac_ros::nitros::nitros_image_bgra8_t::supported_type_name,
+  //   nvidia::isaac_ros::nitros::NitrosDiagnosticsConfig(),
+  //   output_qos_nitros
+  // );
 
   RCLCPP_INFO_STREAM(
     get_logger(),
     "Advertised Nitros on toipc: " << nitros_rbg_left_topic
   );
 
-  mNitrosPubRightRgb = std::make_shared<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosImage>>(
-    this,
-    nitros_rbg_right_topic,
-    nvidia::isaac_ros::nitros::nitros_image_bgra8_t::supported_type_name,
-    nvidia::isaac_ros::nitros::NitrosDiagnosticsConfig(),
-    output_qos_nitros
-  );
+  // mNitrosPubRightRgb = std::make_shared<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosImage>>(
+  //   this,
+  //   nitros_rbg_right_topic,
+  //   nvidia::isaac_ros::nitros::nitros_image_bgra8_t::supported_type_name,
+  //   nvidia::isaac_ros::nitros::NitrosDiagnosticsConfig(),
+  //   output_qos_nitros
+  // );
 
   RCLCPP_INFO_STREAM(
     get_logger(),
     "Advertised Nitros on toipc: " << nitros_rbg_right_topic
   );
 
-  mNitrosPubRightRgbInfo = std::make_shared<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosCameraInfo>>(
-    this,
-    nitros_rbg_right_topic_info,
-    nvidia::isaac_ros::nitros::nitros_camera_info_t::supported_type_name,
-    nvidia::isaac_ros::nitros::NitrosDiagnosticsConfig(),
-    output_qos_nitros
-  );
+  // mNitrosPubRightRgbInfo = std::make_shared<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosCameraInfo>>(
+  //   this,
+  //   nitros_rbg_right_topic_info,
+  //   nvidia::isaac_ros::nitros::nitros_camera_info_t::supported_type_name,
+  //   nvidia::isaac_ros::nitros::NitrosDiagnosticsConfig(),
+  //   output_qos_nitros
+  // );
 
   RCLCPP_INFO_STREAM(
     get_logger(),
     "Advertised Nitros on toipc: " << nitros_rbg_right_topic_info
   );
 
-  mNitrosPubLeftRgbInfo = std::make_shared<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosCameraInfo>>(
-    this,
-    nitros_rbg_left_topic_info,
-    nvidia::isaac_ros::nitros::nitros_camera_info_t::supported_type_name,
-    nvidia::isaac_ros::nitros::NitrosDiagnosticsConfig(),
-    output_qos_nitros
-  );
+  // mNitrosPubLeftRgbInfo = std::make_shared<nvidia::isaac_ros::nitros::ManagedNitrosPublisher<nvidia::isaac_ros::nitros::NitrosCameraInfo>>(
+  //   this,
+  //   nitros_rbg_left_topic_info,
+  //   nvidia::isaac_ros::nitros::nitros_camera_info_t::supported_type_name,
+  //   nvidia::isaac_ros::nitros::NitrosDiagnosticsConfig(),
+  //   output_qos_nitros
+  // );
 
   RCLCPP_INFO_STREAM(
     get_logger(),
@@ -4728,7 +4728,7 @@ bool ZedCamera::startCamera()
 void ZedCamera::initThreads()
 {
   // ----> Start CMOS Temperatures thread
-  if (!mSimMode && !sl_tools::isZED(mCamRealModel) &&
+  if (!sl_tools::isZED(mCamRealModel) &&
     !sl_tools::isZEDM(mCamRealModel))
   {
     startTempPubTimer();
@@ -7262,23 +7262,23 @@ void ZedCamera::publishVideoDepth(rclcpp::Time & out_pub_ts)
   out_pub_ts = timeStamp;
 
   // ----> Publish Right and Left Nitros images with info
-  publishNitrosImageWithInfo(
-    mMatLeft, 
-    mNitrosPubLeftRgb, 
-    mNitrosPubLeftRgbInfo,
-    mLeftCamInfoMsg,
-    mLeftCamOptFrameId,
-    out_pub_ts
-  );
+  // publishNitrosImageWithInfo(
+  //   mMatLeft, 
+  //   mNitrosPubLeftRgb, 
+  //   mNitrosPubLeftRgbInfo,
+  //   mLeftCamInfoMsg,
+  //   mLeftCamOptFrameId,
+  //   out_pub_ts
+  // );
 
-  publishNitrosImageWithInfo(
-    mMatRight, 
-    mNitrosPubRightRgb, 
-    mNitrosPubRightRgbInfo,
-    mRightCamInfoMsg,
-    mRightCamOptFrameId, 
-    out_pub_ts
-  );
+  // publishNitrosImageWithInfo(
+  //   mMatRight, 
+  //   mNitrosPubRightRgb, 
+  //   mNitrosPubRightRgbInfo,
+  //   mRightCamInfoMsg,
+  //   mRightCamOptFrameId, 
+  //   out_pub_ts
+  // );
 
   // ----> Publish the left=rgb image if someone has subscribed to
   if (mLeftSubCount > 0) {
@@ -7335,7 +7335,7 @@ void ZedCamera::publishVideoDepth(rclcpp::Time & out_pub_ts)
       mLeftCamOptFrameId, out_pub_ts);
   }
   if (mRgbGrayRawSubCount > 0) {
-    DEBUG_STREAM_VD("mRgbGrayRawSubCount: " << mRgbGrayRawSubCount);
+    DEBUG_STREAM_VD("mRgbGrayRawSubCount"  << mRgbGrayRawSubCount);
     publishImageWithInfo(
       mMatLeftRawGray, mPubRawRgbGray, mRgbCamInfoRawMsg,
       mDepthOptFrameId, out_pub_ts);

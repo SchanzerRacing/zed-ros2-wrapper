@@ -316,7 +316,7 @@ def generate_launch_description():
                 description='The path to an additional parameters file to override the defaults'),
             DeclareLaunchArgument(
                 'svo_path',
-                default_value=TextSubstitution(text='live'),
+                default_value=TextSubstitution(text=''),
                 description='Path to an input SVO file.'),
             DeclareLaunchArgument(
                 'enable_gnss',
